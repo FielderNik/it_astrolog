@@ -10,7 +10,6 @@ interface ProviderSettingsProps {
 
 export function ProviderSettings({ settings, onSave, createProvider, onClose }: ProviderSettingsProps) {
   const [draft, setDraft] = useState(settings)
-  const [cloudKey, setCloudKey] = useState('')
   const [status, setStatus] = useState<ProviderStatus>({ available: false, message: 'Проверяем доступность…' })
 
   useEffect(() => {
@@ -57,13 +56,7 @@ export function ProviderSettings({ settings, onSave, createProvider, onClose }: 
           <label htmlFor="model">Модель</label>
           <input id="model" value={draft.model} onChange={(event) => update('model', event.target.value)} />
         </div>
-        {draft.provider === 'cloud' && (
-          <div className="field-group">
-            <label htmlFor="cloud-key">Ключ API (только память вкладки)</label>
-            <input id="cloud-key" type="password" autoComplete="off" value={cloudKey} onChange={(event) => setCloudKey(event.target.value)} />
-            <p className="form-note">Демонстрационная заготовка: ключ не сохраняется, а облачный запрос пока не реализован.</p>
-          </div>
-        )}
+        {draft.provider === 'cloud' && <p className="form-note">Облачный режим пока не реализован. Ключи API в приложение вводить не нужно.</p>}
         <p className={`provider-status ${status.available ? 'is-available' : ''}`} role="status">{status.message}</p>
         <div className="dialog-actions">
           <button className="text-button" type="button" onClick={onClose}>Отмена</button>
